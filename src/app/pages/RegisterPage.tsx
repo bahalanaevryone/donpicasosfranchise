@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const packageCode = searchParams.get('package');
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <main className="pt-28 pb-16">
@@ -25,7 +25,7 @@ export default function RegisterPage() {
           />
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Create Your{' '}
-            <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+            <span className="brand-gradient-text">
               Account
             </span>
           </h1>

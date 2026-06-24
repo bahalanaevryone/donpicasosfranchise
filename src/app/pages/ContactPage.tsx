@@ -1,4 +1,4 @@
-﻿import { FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Clock, Send, Facebook, Instagram, Twitter, CheckCircle } from 'lucide-react';
 import { useSearchParams } from 'react-router';
@@ -58,9 +58,8 @@ export default function ContactPage() {
     try {
       // 1. Kuhanin natin kung may piniling package sa URL (e.g. ?package=VIP)
       const urlPackageCode = (searchParams.get('package') ?? '').toUpperCase();
-      const finalPackageName = urlPackageCode 
-        ? (PACKAGE_LABELS[urlPackageCode] || urlPackageCode) 
-        : 'Standard Franchise';
+      const hasPackage = urlPackageCode && PACKAGE_LABELS[urlPackageCode];
+      const finalPackageName = hasPackage ? PACKAGE_LABELS[urlPackageCode] : null;
 
       // 2. I-insert na natin kasama ang mga bagong columns para sa Admin Dashboard niyo!
       const { error } = await supabase
@@ -70,10 +69,10 @@ export default function ContactPage() {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          status: 'new', // Para mag-count sa "New Leads" card sa dashboard
+          status: 'new',
           package_name: finalPackageName,
-          budget: formData.investmentBudget || 'TBA',
-          location: formData.preferredLocation || 'TBA'
+          budget: formData.investmentBudget || null,
+          location: formData.preferredLocation || null
         }]);
 
       if (error) {
@@ -115,14 +114,14 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 via-transparent to-[#B30000]/10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Get In <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">Touch</span>
+              Get In <span className="brand-gradient-text">Touch</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Ready to discuss business rebranding, supply distribution, or ready-to-cook products?
@@ -135,7 +134,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Send Us a <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">Message</span></h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Send Us a <span className="brand-gradient-text">Message</span></h2>
               
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

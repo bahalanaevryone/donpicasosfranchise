@@ -1,4 +1,4 @@
-﻿import { motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { Link } from 'react-router';
 import {
   TrendingUp,
@@ -35,7 +35,7 @@ export default function LandingPage() {
     { icon: Building2, value: '5', label: 'Active Branches' },
     { icon: Users, value: 'MIMAROPA', label: 'Regional Expansion' },
     { icon: TrendingUp, value: '2026', label: 'Founded' },
-    { icon: Award, value: '₱199K', label: 'Starting Investment' },
+    { icon: Award, value: '?199K', label: 'Starting Investment' },
   ];
 
   const packages = franchisePackages;
@@ -117,7 +117,7 @@ export default function LandingPage() {
     {
       question: 'What is the total investment required?',
       answer:
-        'Don Picaso\'s offers three franchise packages: Starter at ₱199,000, Pro at ₱599,000, and Elite at ₱1,000,000. Estimated store investment ranges from ₱300,000 to ₱500,000+ depending on location, store size, and operational requirements.',
+        'Don Picaso\'s offers three franchise packages: Starter at ?199,000, Pro at ?599,000, and Elite at ?1,000,000. Estimated store investment ranges from ?300,000 to ?500,000+ depending on location, store size, and operational requirements.',
     },
     {
       question: 'What is the Titser Art Entrepreneur Development Program?',
@@ -127,7 +127,7 @@ export default function LandingPage() {
     {
       question: 'How long does it take to open a franchise?',
       answer:
-        'From application to grand opening, the process typically takes 4–6 months. This includes site selection, construction, training, and setup.',
+        'From application to grand opening, the process typically takes 4�6 months. This includes site selection, construction, training, and setup.',
     },
     {
       question: 'What kind of support do franchisees receive?',
@@ -147,7 +147,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       {/* Hero Section */}
@@ -169,13 +169,13 @@ export default function LandingPage() {
             />
             <div className="inline-block mb-6">
               <span className="px-4 py-2 bg-gradient-to-r from-[#FFD700]/20 to-[#B30000]/20 border border-[#FFD700]/30 rounded-full text-[#FFD700] text-sm font-semibold">
-                Proudly Filipino-Owned · MIMAROPA Region
+                Proudly Filipino-Owned � MIMAROPA Region
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
               Don Picaso's House
               <br />
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 of Franchise
               </span>
             </h1>
@@ -183,7 +183,7 @@ export default function LandingPage() {
               Swak sa Budget, Premium ang Lasa.
             </p>
             <p className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto">
-              We don't just build restaurants — we build entrepreneurs. Join a franchise system
+              We don't just build restaurants � we build entrepreneurs. Join a franchise system
               powered by the Titser Art Entrepreneur Development Program.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -200,7 +200,7 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6"
+                  className="border-white/20 hover:bg-white/10 text-lg px-8 py-6"
                 >
                   Talk to Us
                 </Button>
@@ -241,22 +241,22 @@ export default function LandingPage() {
             >
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 A Brand Built on{' '}
-                <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                <span className="brand-gradient-text">
                   Resilience
                 </span>
               </h2>
               <p className="text-gray-300 text-lg mb-6">
                 Don Picaso's was born from resilience, innovation, and a commitment to creating
                 opportunities for communities. The name represents the places that inspired our
-                beginnings — <strong className="text-white">Don</strong>sol,{' '}
+                beginnings � <strong className="text-white">Don</strong>sol,{' '}
                 <strong className="text-white">Pi</strong>lar,{' '}
                 <strong className="text-white">Ca</strong>stilla, and{' '}
-                <strong className="text-white">So</strong>rsogon — communities in the Province of
+                <strong className="text-white">So</strong>rsogon � communities in the Province of
                 Sorsogon that shaped this vision.
               </p>
               <p className="text-gray-300 text-lg mb-8">
                 Founded by Arturo D. Alafriz Jr., a professional teacher and school president of
-                16 years, Don Picaso's transforms adversity into opportunity — establishing its
+                16 years, Don Picaso's transforms adversity into opportunity � establishing its
                 first branch in Mamburao in January 2026, and expanding to multiple locations
                 within six months.
               </p>
@@ -299,12 +299,12 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Menu
               </span>
             </h2>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Quality food at prices that work — Swak sa Budget, Premium ang Lasa.
+              Quality food at prices that work � Swak sa Budget, Premium ang Lasa.
             </p>
           </motion.div>
 
@@ -364,7 +364,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Why Franchise with{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Don Picaso's?
               </span>
             </h2>
@@ -378,32 +378,32 @@ export default function LandingPage() {
               {
                 icon: GraduationCap,
                 title: 'Educator-Led Mentorship',
-                description: "Your franchisor is a former school president. You don't just get a manual — you get a mentor.",
+                description: "Your franchisor is a former school president. You don't just get a manual � you get a mentor.",
               },
               {
                 icon: BarChart3,
                 title: 'Proven Track Record',
-                description: '4 branches opened in just 6 months with monthly sales of ₱150K–₱300K per branch',
+                description: '4 branches opened in just 6 months with monthly sales of ?150K�?300K per branch',
               },
               {
                 icon: Handshake,
                 title: 'Community-Rooted Brand ',
-                description: 'Built for and by local communities in the MIMAROPA Region — not a foreign import. ',
+                description: 'Built for and by local communities in the MIMAROPA Region � not a foreign import. ',
               },
               {
                 icon: BadgeDollarSign,
                 title: 'Affordable Investment ',
-                description: 'Competitive franchise packages designed for the local market — accessible to teachers, OFWs, and professionals.',
+                description: 'Competitive franchise packages designed for the local market � accessible to teachers, OFWs, and professionals.',
               },
               {
                 icon: TrendingUp,
                 title: 'Exclusive Territory ',
-                description: 'One franchisee per municipality — protecting your investment and market coverage.',
+                description: 'One franchisee per municipality � protecting your investment and market coverage.',
               },
               {
                 icon: Utensils,
                 title: 'Quality & Affordable Food ',
-                description: 'Products designed for the Filipino palate — fast, flavorful, and fairly priced for every community.',
+                description: 'Products designed for the Filipino palate � fast, flavorful, and fairly priced for every community.',
               },
             ].map((item, index) => (
               <motion.div
@@ -437,7 +437,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Choose Your{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Franchise Package
               </span>
             </h2>
@@ -459,7 +459,7 @@ export default function LandingPage() {
                 <GlassCard hover={false}>
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
-                    <div className="text-4xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-2">
+                    <div className="text-4xl font-bold brand-gradient-text mb-2">
                       {pkg.price}
                     </div>
                     <p className="text-gray-400 text-sm">{pkg.description}</p>
@@ -483,7 +483,7 @@ export default function LandingPage() {
           </div>
 
           <p className="text-center text-gray-400 mt-8 text-sm">
-            Estimated store investment: ₱300,000 – ₱500,000+ depending on location, store size, and operational requirements.
+            Estimated store investment: ?300,000 � ?500,000+ depending on location, store size, and operational requirements.
           </p>
         </div>
       </section>
@@ -512,7 +512,7 @@ export default function LandingPage() {
                   </p>
                   <p className="text-gray-400 mb-6">
                     Founded by a professional educator, Titser Art goes beyond the franchise system
-                    to develop the entrepreneur behind the business — through coaching, mentorship,
+                    to develop the entrepreneur behind the business � through coaching, mentorship,
                     leadership training, and financial education.
                   </p>
                   <div className="space-y-3">
@@ -571,7 +571,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               The{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 DON PICASO
               </span>{' '}
               Core Values
@@ -618,7 +618,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Branch Network
               </span>
             </h2>
@@ -684,7 +684,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               MIMAROPA{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Expansion Roadmap
               </span>
             </h2>
@@ -748,7 +748,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Franchise{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Partner Stories
               </span>
             </h2>
@@ -799,7 +799,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Your Path to{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Partnership
               </span>
             </h2>
@@ -845,7 +845,7 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Frequently Asked{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Questions
               </span>
             </h2>
@@ -880,13 +880,13 @@ export default function LandingPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Ready to Build Your{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Future?
               </span>
             </h2>
             <p className="text-gray-300 text-lg mb-8">
               Join Don Picaso's House of Franchise and become part of a growing network of entrepreneurs
-              across the MIMAROPA Region. Packages start at ₱199,000.
+              across the MIMAROPA Region. Packages start at ?199,000.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/apply">
@@ -902,14 +902,14 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-white/10 text-lg px-10 py-6"
+                  className="border-white/20 hover:bg-white/10 text-lg px-10 py-6"
                 >
                   Contact Us
                 </Button>
               </Link>
             </div>
-            <p className="text-gray-500 text-sm mt-6">
-              Contact: 0956-293-1985 · donpicasofoodservices@gmail.com
+            <p className="text-white-500 text-sm mt-6">
+              Contact: 0956-293-1985 � donpicasofoodservices@gmail.com
             </p>
           </motion.div>
         </div>

@@ -107,7 +107,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
@@ -122,7 +122,7 @@ export default function AboutPage() {
           >
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Story
               </span>
             </h1>
@@ -169,7 +169,7 @@ export default function AboutPage() {
             >
               <h2 className="text-4xl font-bold text-white mb-6">
                 From Education to{' '}
-                <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                <span className="brand-gradient-text">
                   Entrepreneurship
                 </span>
               </h2>
@@ -204,7 +204,7 @@ export default function AboutPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <GlassCard className="text-center">
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-2 break-words">
+                  <div className="text-4xl md:text-5xl font-bold brand-gradient-text mb-2 break-words">
                     {milestone.number}
                   </div>
                   <div className="text-gray-300">{milestone.label}</div>
@@ -296,7 +296,7 @@ export default function AboutPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Journey
               </span>
             </h2>
@@ -323,7 +323,7 @@ export default function AboutPage() {
                 >
                   <div className="flex-1">
                     <GlassCard className={index % 2 === 0 ? 'md:text-right' : ''}>
-                      <div className="text-3xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-2">
+                      <div className="text-3xl font-bold brand-gradient-text mb-2">
                         {item.year}
                       </div>
                       <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
@@ -351,7 +351,7 @@ export default function AboutPage() {
             >
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 The Meaning of{' '}
-                <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                <span className="brand-gradient-text">
                   Don Picaso
                 </span>
               </h2>
@@ -398,7 +398,7 @@ export default function AboutPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Core Values
               </span>
             </h2>
@@ -439,7 +439,7 @@ export default function AboutPage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Growing Across{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Mindoro
               </span>
             </h2>

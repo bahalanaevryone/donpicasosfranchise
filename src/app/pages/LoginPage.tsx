@@ -12,7 +12,7 @@ export default function LoginPage() {
   const packageCode = searchParams.get('package');
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <main className="pt-28 pb-16">
@@ -25,7 +25,7 @@ export default function LoginPage() {
           />
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
             Welcome{' '}
-            <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+            <span className="brand-gradient-text">
               Back
             </span>
           </h1>

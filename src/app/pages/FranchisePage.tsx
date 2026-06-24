@@ -1,4 +1,4 @@
-﻿import { motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { Link } from 'react-router';
 import {
   CheckCircle,
@@ -199,7 +199,7 @@ export default function FranchisePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       {/* Hero Section */}
@@ -220,7 +220,7 @@ export default function FranchisePage() {
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               Business{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Opportunities
               </span>
             </h1>
@@ -251,7 +251,7 @@ export default function FranchisePage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               What's{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Included
               </span>
             </h2>
@@ -293,7 +293,7 @@ export default function FranchisePage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Opportunity{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Options
               </span>
             </h2>
@@ -324,7 +324,7 @@ export default function FranchisePage() {
                 >
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
-                    <div className="text-5xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-2">
+                    <div className="text-5xl font-bold brand-gradient-text mb-2">
                       {pkg.price}
                     </div>
                     <p className="text-gray-400">{pkg.description}</p>
@@ -365,7 +365,7 @@ export default function FranchisePage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Financial{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Projection
               </span>
             </h2>
@@ -423,7 +423,7 @@ export default function FranchisePage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Support &{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Training
               </span>
             </h2>
@@ -472,7 +472,7 @@ export default function FranchisePage() {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               The{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Process
               </span>
             </h2>

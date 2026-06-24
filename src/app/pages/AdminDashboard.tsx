@@ -1,5 +1,6 @@
 ﻿import { type FormEvent, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import * as XLSX from 'xlsx';
 import {
   Users,
   Building2,
@@ -20,6 +21,7 @@ import {
   Hash,
   FileText,
   Banknote,
+  Trash2,
 } from 'lucide-react';
 import {
   AreaChart,
@@ -34,8 +36,6 @@ import {
   Cell,
   Legend
 } from 'recharts';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import GlassCard from '../components/GlassCard';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
@@ -171,6 +171,8 @@ export default function AdminDashboard() {
   const [replyMessage, setReplyMessage] = useState('');
   const [replyStatus, setReplyStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [replyErrorMsg, setReplyErrorMsg] = useState('');
+  const [deleteStatus, setDeleteStatus] = useState<'idle' | 'confirm' | 'deleting' | 'error'>('idle');
+  const [deleteErrorMsg, setDeleteErrorMsg] = useState('');
 
   const handleSendEmail = async () => {
     if (!selectedLead || !replySubject.trim() || !replyMessage.trim()) return;
@@ -189,16 +191,16 @@ export default function AdminDashboard() {
               <p>Dear ${selectedLead.name},</p>
               ${replyMessage.trim().split('\n').map(line => `<p>${line}</p>`).join('')}
               <hr />
-              <p style="font-size: 12px; color: #666;">Don Picaso's Food Services<br/>Mamburao, Occidental Mindoro</p>
+              <p style="font-size: 12px; color: #666;">Don Picaso's House of Franchise<br/>Mamburao, Occidental Mindoro</p>
             </div>
           `,
         },
       })
       if (error) { console.error('Invoke error:', error); setReplyErrorMsg(error.message || JSON.stringify(error)); throw error }
       if (!data?.success) {
-        const resendErr = data?.data?.error || JSON.stringify(data)
-        console.error('Resend error:', resendErr)
-        setReplyErrorMsg(resendErr)
+        const brevoErr = data?.data?.message || data?.error || JSON.stringify(data)
+        console.error('Brevo error:', brevoErr)
+        setReplyErrorMsg(brevoErr)
         setReplyStatus('error')
         setTimeout(() => setReplyStatus('idle'), 5000)
         return
@@ -212,6 +214,58 @@ export default function AdminDashboard() {
     }
   }
 
+  const handleDelete = async () => {
+    if (!selectedLead || deleteStatus !== 'confirm') return;
+    setDeleteStatus('deleting');
+    setDeleteErrorMsg('');
+    try {
+      const { data, error } = await supabase.functions.invoke('delete-lead', {
+        body: { lead_id: selectedLead.id },
+      })
+
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error || 'Delete failed');
+
+      setDashboard((prev) => ({
+        ...prev,
+        recentLeads: prev.recentLeads.filter((l) => l.id !== selectedLead.id),
+      }));
+      setSelectedLead(null);
+    } catch (err) {
+      setDeleteErrorMsg(err.message);
+      setDeleteStatus('error');
+      setTimeout(() => setDeleteStatus('idle'), 4000);
+    }
+  };
+
+  const handleExportExcel = () => {
+    const rows = dashboard.recentLeads.map((lead) => ({
+      ID: lead.id,
+      Name: lead.name,
+      Email: lead.email,
+      Phone: lead.phone,
+      Package: lead.package_name || '—',
+      Budget: lead.budget,
+      Location: lead.location || '—',
+      Message: lead.message || '',
+      Date: lead.submitted_date,
+      Status: lead.status,
+    }));
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(rows);
+
+    const colWidths = [
+      { wch: 6 }, { wch: 20 }, { wch: 30 },
+      { wch: 16 }, { wch: 22 }, { wch: 16 },
+      { wch: 16 }, { wch: 40 }, { wch: 14 }, { wch: 12 },
+    ];
+    ws['!cols'] = colWidths;
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Leads');
+    XLSX.writeFile(wb, `DonPicaso_Leads_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   // Sync edit fields whenever a lead is opened
   const openLead = (lead: RecentLead) => {
     setSelectedLead(lead);
@@ -222,9 +276,15 @@ export default function AdminDashboard() {
       location: lead.location === '—' ? '' : (lead.location ?? ''),
     });
     setSaveStatus('idle');
-    setReplySubject('');
+    setReplySubject(
+      lead.package_name
+        ? `Re: Your Don Picaso Franchise Inquiry - ${lead.package_name}`
+        : 'Re: Your Don Picaso Inquiry'
+    );
     setReplyMessage('');
     setReplyStatus('idle');
+    setDeleteStatus('idle');
+    setDeleteErrorMsg('');
   };
 
   const handleSaveEdit = async () => {
@@ -290,8 +350,11 @@ export default function AdminDashboard() {
         const rawLeads = leadsData || [];
 
         // Split data organically based on schema signatures
-        const franchiseApplications = rawLeads.filter(l => l.package_name || l.budget);
-        const contactOnlyMessages = rawLeads.filter(l => l.message && !l.package_name);
+        const franchiseApplications = rawLeads.filter(l =>
+          (l.package_name && l.package_name !== 'Standard Franchise') ||
+          (l.budget && l.budget !== 'TBA' && l.budget !== '0')
+        );
+        const contactOnlyMessages = rawLeads.filter(l => l.message);
 
         // Map status counts dynamically
         const statusCounts: Record<string, number> = {};
@@ -373,9 +436,12 @@ export default function AdminDashboard() {
     setIsAuthenticated(false);
   };
 
+  const hasRealPackage = (l: RecentLead) => l.package_name && l.package_name !== 'Standard Franchise';
+  const hasRealBudget = (l: RecentLead) => l.budget !== '—' && l.budget !== 'TBA' && l.budget !== '0';
+
   const filteredLeads = useMemo(() => {
-    if (activeTab === 'franchise') return dashboard.recentLeads.filter(l => l.package_name);
-    if (activeTab === 'messages') return dashboard.recentLeads.filter(l => l.message && !l.package_name);
+    if (activeTab === 'franchise') return dashboard.recentLeads.filter(l => hasRealPackage(l) || hasRealBudget(l));
+    if (activeTab === 'messages') return dashboard.recentLeads.filter(l => l.message);
     return dashboard.recentLeads;
   }, [activeTab, dashboard.recentLeads]);
 
@@ -460,28 +526,44 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-[#08090c] text-slate-100 flex flex-col font-sans">
-      <Navbar showAdminLogout onAdminLogout={handleLogout} />
 
-      {/* HEADER NODE */}
-      <header className="pt-24 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto border-b border-white/5">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1">
-              <LayoutDashboard className="w-3.5 h-3.5" /> Operations Intelligence Control
+      {/* Admin header bar with logo + title */}
+      <header className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-[#0d0e14]">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <img
+              src="/assets/don-picasos-logo.jpg"
+              alt="Don Picaso's"
+              className="h-8 w-24 rounded object-contain object-center brightness-75"
+            />
+            <div className="hidden sm:block">
+              <div className="text-slate-300 font-bold text-sm tracking-wide">DON PICASO'S</div>
+              <div className="text-amber-400/70 text-[10px] tracking-wider">HOUSE OF FRANCHISE</div>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              System <span className="bg-gradient-to-r from-amber-400 to-red-500 bg-clip-text text-transparent">Command Engine</span>
-            </h1>
           </div>
+          <div className="hidden md:block h-6 w-px bg-white/10" />
+          <div className="hidden md:flex items-center gap-2 text-[10px] font-bold text-amber-400 uppercase tracking-widest">
+            <LayoutDashboard className="w-3.5 h-3.5" /> Operations Intelligence Control
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleExportExcel}
+            className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-bold rounded-lg transition-all"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            Export Excel
+          </button>
           <div className="bg-white/[0.03] border border-white/10 px-3 py-1.5 rounded-xl flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <div className="text-xs text-slate-400">
-              Pipeline Sync: <span className="text-white font-mono font-medium">{isFromDatabase ? dashboard.lastUpdated : 'Fallback Cache'}</span>
+            <div className="text-xs text-slate-400 hidden sm:block">
+              <span className="text-white font-mono font-medium">{isFromDatabase ? dashboard.lastUpdated : 'Fallback Cache'}</span>
             </div>
-            <button onClick={handleLogout} className="p-1 text-slate-500 hover:text-red-400 transition-colors ml-1" title="Disconnect Session">
-              <LogOut className="w-3.5 h-3.5" />
-            </button>
           </div>
+          <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 text-slate-400 hover:text-red-400 hover:border-red-500/30 text-xs font-semibold rounded-lg transition-colors">
+            <LogOut className="w-3.5 h-3.5" />
+            Logout
+          </button>
         </div>
       </header>
 
@@ -645,8 +727,6 @@ export default function AdminDashboard() {
           </GlassCard>
         </section>
       </main>
-
-      <Footer />
 
       {/* ── LEAD DETAIL PANEL ───────────────────────────────────────────── */}
       <AnimatePresence>
@@ -863,6 +943,31 @@ export default function AdminDashboard() {
                   className="flex items-center justify-center gap-2 w-full h-8 bg-white/5 border border-white/10 text-slate-400 hover:text-white text-xs font-semibold rounded-lg hover:bg-white/10 transition-colors"
                 >
                   Copy Email Address
+                </button>
+
+                {deleteStatus === 'error' && deleteErrorMsg && (
+                  <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs text-red-300 break-all">
+                    {deleteErrorMsg}
+                  </div>
+                )}
+                <button
+                  onClick={() => {
+                    if (deleteStatus === 'confirm') {
+                      handleDelete();
+                    } else {
+                      setDeleteStatus('confirm');
+                      setTimeout(() => setDeleteStatus('idle'), 5000);
+                    }
+                  }}
+                  disabled={deleteStatus === 'deleting'}
+                  className={`flex items-center justify-center gap-2 w-full h-9 rounded-lg text-xs font-bold transition-all ${
+                    deleteStatus === 'confirm'
+                      ? 'bg-red-500/20 border border-red-500/30 text-red-400 animate-pulse'
+                      : 'bg-white/5 border border-white/10 text-red-400 hover:bg-red-500/10 hover:border-red-500/30'
+                  }`}
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  {deleteStatus === 'deleting' ? 'Deleting...' : deleteStatus === 'confirm' ? 'Confirm Delete?' : 'Delete Record'}
                 </button>
               </div>
             </motion.aside>

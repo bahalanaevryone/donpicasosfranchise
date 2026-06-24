@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, Clock, CheckCircle, Loader } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -189,7 +189,7 @@ export default function BranchesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
@@ -199,7 +199,7 @@ export default function BranchesPage() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               Our{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Locations
               </span>
             </h1>
@@ -216,7 +216,7 @@ export default function BranchesPage() {
             {stats.map((stat, index) => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
                 <GlassCard className="text-center">
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-2">
+                  <div className="text-4xl md:text-5xl font-bold brand-gradient-text mb-2">
                     {stat.value}
                   </div>
                   <div className="text-gray-300 text-sm md:text-base">{stat.label}</div>
@@ -232,7 +232,7 @@ export default function BranchesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Confirmed{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Location
               </span>
             </h2>
@@ -251,7 +251,7 @@ export default function BranchesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               To{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Verify
               </span>
             </h2>
@@ -270,7 +270,7 @@ export default function BranchesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Business{' '}
-              <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+              <span className="brand-gradient-text">
                 Reach
               </span>
             </h2>

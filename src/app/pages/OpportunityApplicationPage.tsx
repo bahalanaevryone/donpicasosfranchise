@@ -17,7 +17,7 @@ export default function OpportunityApplicationPage() {
     : '/contact';
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-4 pt-28 pb-20">
@@ -36,14 +36,14 @@ export default function OpportunityApplicationPage() {
             {pkg ? (
               <>
                 You Selected the{' '}
-                <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                <span className="brand-gradient-text">
                   {pkg.name}
                 </span>
               </>
             ) : (
               <>
                 Choose a{' '}
-                <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                <span className="brand-gradient-text">
                   Package
                 </span>
               </>
@@ -69,7 +69,7 @@ export default function OpportunityApplicationPage() {
                     SELECTED PACKAGE
                   </span>
                   <h2 className="text-3xl font-bold text-white mt-3 mb-1">{pkg.name}</h2>
-                  <div className="text-4xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-3">
+                  <div className="text-4xl font-bold brand-gradient-text mb-3">
                     {pkg.price}
                   </div>
                   <p className="text-gray-400 text-sm mb-6">{pkg.description}</p>

@@ -19,7 +19,7 @@ export default function FranchisePackagePage() {
   const otherPackages = franchisePackages.filter((item) => item.code !== pkg.code);
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <section className="relative overflow-hidden pt-28 pb-16">
@@ -44,7 +44,7 @@ export default function FranchisePackagePage() {
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-5">
                 {pkg.name}
               </h1>
-              <div className="text-5xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent mb-5">
+              <div className="text-5xl font-bold brand-gradient-text mb-5">
                 {pkg.price}
               </div>
               <p className="text-xl text-gray-300 max-w-2xl mb-8">
@@ -60,14 +60,11 @@ export default function FranchisePackagePage() {
                     <ArrowRight className="ml-2" />
                   </Button>
                 </Link>
-                <a href="tel:+639562931985">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-white/20 text-white hover:bg-white/10 text-lg px-8 py-6"
-                  >
-                    Call Us
-                  </Button>
+                <a 
+                  href="tel:+639562931985" 
+                  className="inline-flex items-center justify-center h-12 px-8 text-lg font-bold text-white transition-colors border rounded-md border-white/20 hover:bg-white/10 w-full sm:w-auto"
+                >
+                  Call Us
                 </a>
               </div>
             </motion.div>

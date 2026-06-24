@@ -81,7 +81,7 @@ export default function MemberPortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#7A0000]">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
       <main className="pt-28 pb-16">
@@ -99,7 +99,7 @@ export default function MemberPortalPage() {
                 </div>
                 <h1 className="text-4xl font-bold text-white md:text-6xl">
                   Welcome,{' '}
-                  <span className="bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                  <span className="brand-gradient-text">
                     {fullName}
                   </span>
                 </h1>
@@ -130,7 +130,7 @@ export default function MemberPortalPage() {
                     </p>
                     <h2 className="mt-2 text-3xl font-bold text-white">{packageName}</h2>
                     {packagePrice && (
-                      <p className="mt-1 text-2xl font-bold bg-gradient-to-r from-[#FFD700] to-[#B30000] bg-clip-text text-transparent">
+                      <p className="mt-1 text-2xl font-bold brand-gradient-text">
                         {packagePrice}
                       </p>
                     )}

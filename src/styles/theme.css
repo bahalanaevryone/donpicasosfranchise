@@ -125,7 +125,8 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: #b30000;
   }
 
   /**
@@ -177,5 +178,21 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+@layer utilities {
+  .brand-gradient-text {
+    color: #ffd700;
+    background-image: linear-gradient(90deg, #fff8c9 0%, #ffd700 42%, #ffb000 72%, #fff1cf 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.45px rgba(255, 255, 255, 0.58);
+    paint-order: stroke fill;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.35),
+      0 0 14px rgba(255, 215, 0, 0.3),
+      0 3px 16px rgba(0, 0, 0, 0.34);
   }
 }

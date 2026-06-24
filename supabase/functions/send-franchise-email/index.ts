@@ -1,7 +1,6 @@
-import { ServeHandler } from "https://deno.land/std@0.131.0/http/server.ts"
-
-const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
-const RESEND_FROM_EMAIL = Deno.env.get('RESEND_FROM_EMAIL') || 'onboarding@resend.dev'
+const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY')
+const BREVO_FROM_EMAIL = Deno.env.get('BREVO_FROM_EMAIL') || ''
+const BREVO_FROM_NAME = Deno.env.get('BREVO_FROM_NAME') || 'Don Picaso Franchise'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -29,6 +28,22 @@ interface ManualSendPayload {
   html_body: string
 }
 
+function sendBrevoEmail(to: { email: string; name: string }, subject: string, htmlContent: string, fromName?: string) {
+  return fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: fromName || BREVO_FROM_NAME, email: BREVO_FROM_EMAIL },
+      to: [to],
+      subject,
+      htmlContent,
+    }),
+  })
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -47,23 +62,16 @@ Deno.serve(async (req) => {
         })
       }
 
-      const emailResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-          from: `Don Picaso Franchise <${RESEND_FROM_EMAIL}>`,
-          to: [to_email],
-          subject: subject,
-          html: html_body,
-        }),
-      })
+      const emailResponse = await sendBrevoEmail(
+        { email: to_email, name: to_name || '' },
+        subject,
+        html_body,
+        'Don Picaso Franchise',
+      )
 
-      const resendData = await emailResponse.json()
+      const data = await emailResponse.json()
 
-      return new Response(JSON.stringify({ success: emailResponse.ok, data: resendData }), {
+      return new Response(JSON.stringify({ success: emailResponse.ok, data }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: emailResponse.ok ? 200 : 400,
       })
@@ -72,38 +80,33 @@ Deno.serve(async (req) => {
     // Webhook mode — auto-notify admin when new lead is inserted
     const { name, email, phone, message } = (payload as WebhookPayload).record
 
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: `Don Picaso Leads <${RESEND_FROM_EMAIL}>`,
-        to: ['delacruzjoven937@gmail.com'],
-        subject: `NEW FRANCHISE LEAD: ${name}`,
-        html: `
-          <div style="font-family: sans-serif; padding: 20px; border: 1px solid #7A0000; border-radius: 8px;">
-            <h2 style="color: #7A0000;">Don Picaso's House of Franchise</h2>
-            <p>May bagong aplikante o inquiry na pumasok sa inyong website:</p>
-            <hr />
-            <p><strong>Pangalan:</strong> ${name}</p>
-            <p><strong>Email Address:</strong> ${email}</p>
-            <p><strong>Phone Number:</strong> ${phone}</p>
-            <p><strong>Mensahe/Detalye:</strong></p>
-            <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #FFD700;">
-              ${message}
-            </blockquote>
-            <hr />
-            <p style="font-size: 12px; color: #666;">Mula ito sa inyong Automated Website System.</p>
-          </div>
-        `,
-      }),
-    })
+    const htmlContent = `
+      <div style="font-family: sans-serif; padding: 20px; border: 1px solid #7A0000; border-radius: 8px;">
+        <h2 style="color: #7A0000;">Don Picaso's House of Franchise</h2>
+        <p>May bagong aplikante o inquiry na pumasok sa inyong website:</p>
+        <hr />
+        <p><strong>Pangalan:</strong> ${name}</p>
+        <p><strong>Email Address:</strong> ${email}</p>
+        <p><strong>Phone Number:</strong> ${phone}</p>
+        <p><strong>Mensahe/Detalye:</strong></p>
+        <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #FFD700;">
+          ${message}
+        </blockquote>
+        <hr />
+        <p style="font-size: 12px; color: #666;">Mula ito sa inyong Automated Website System.</p>
+      </div>
+    `
 
-    const resendData = await emailResponse.json()
+    const emailResponse = await sendBrevoEmail(
+      { email: 'delacruzjoven937@gmail.com', name: 'Admin' },
+      `NEW FRANCHISE LEAD: ${name}`,
+      htmlContent,
+      'Don Picaso Leads',
+    )
 
-    return new Response(JSON.stringify({ success: true, data: resendData }), {
+    const data = await emailResponse.json()
+
+    return new Response(JSON.stringify({ success: true, data }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
