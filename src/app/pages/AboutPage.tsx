@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { Button } from '../components/ui/button';
+import PictureImage from '../components/PictureImage';
 
 export default function AboutPage() {
   const founderImage = '/assets/art_image.webp';
@@ -140,12 +141,13 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
             >
               <div className="relative overflow-hidden rounded-2xl border border-[#FFD700]/25 bg-[#5A0000]/70 shadow-2xl">
-                <img
-                  src={founderImage}
+                <PictureImage
+                  webpSrc={founderImage}
+                  fallbackSrc="/assets/art_image.png"
                   alt="Titser Art, Founder and CEO of Don Picaso's"
                   className="aspect-[4/5] w-full object-cover object-center"
                   onError={(event) => {
-                    event.currentTarget.src = '/assets/don-picasos-logo.webp';
+                    event.currentTarget.src = '/assets/don-picasos-logo.jpg';
                     event.currentTarget.className =
                       'aspect-[4/5] w-full object-contain object-center p-10 bg-white';
                   }}

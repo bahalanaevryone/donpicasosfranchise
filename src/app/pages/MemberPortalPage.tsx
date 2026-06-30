@@ -210,7 +210,7 @@ export default function MemberPortalPage() {
                     {media.map((item) => (
                       <GlassCard key={item.id} hover={false} className="overflow-hidden p-0">
                         {item.type === 'photo' ? (
-                          <img src={item.src} alt={item.title} className="aspect-video w-full object-cover" />
+                          <img src={item.src} alt={item.title} loading="lazy" decoding="async" className="aspect-video w-full object-cover" />
                         ) : (
                           <video src={item.src} controls className="aspect-video w-full bg-black object-contain" />
                         )}

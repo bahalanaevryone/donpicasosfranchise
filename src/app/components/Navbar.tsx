@@ -2,6 +2,7 @@
 import { Link, useLocation, useNavigate } from 'react-router';
 import { LogOut, Menu, X, User, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
+import PictureImage from './PictureImage';
 
 interface NavbarProps {
   showAdminLogout?: boolean;
@@ -78,8 +79,9 @@ export default function Navbar({ showAdminLogout = false, onAdminLogout }: Navba
 
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img
-              src="/assets/don-picasos-logo.webp"
+            <PictureImage
+              webpSrc="/assets/don-picasos-logo.webp"
+              fallbackSrc="/assets/don-picasos-logo.jpg"
               alt="Don Picaso's"
               className="h-12 w-36 rounded-md object-contain object-center shadow-[0_0_20px_rgba(255,215,0,0.25)]"
             />

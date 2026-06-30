@@ -136,6 +136,8 @@ export default function BranchesPage() {
           <img
             src={branch.image ?? 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop'}
             alt={branch.name}
+            loading="lazy"
+            decoding="async"
             className={`w-full h-48 object-cover ${isUpcoming ? 'opacity-60' : ''}`}
           />
           <div className="absolute top-4 right-4">

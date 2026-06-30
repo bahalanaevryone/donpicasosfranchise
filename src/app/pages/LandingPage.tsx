@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import GlassCard from '../components/GlassCard';
+import PictureImage from '../components/PictureImage';
 import { Button } from '../components/ui/button';
 import {
   Accordion,
@@ -158,8 +159,9 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <img
-              src="/assets/don-picasos-logo.webp"
+            <PictureImage
+              webpSrc="/assets/don-picasos-logo.webp"
+              fallbackSrc="/assets/don-picasos-logo.jpg"
               alt="Don Picaso's"
               className="mx-auto mb-8 h-20 w-full max-w-md rounded-lg object-contain shadow-[0_0_36px_rgba(255,215,0,0.28)]"
             />
@@ -270,8 +272,9 @@ export default function LandingPage() {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <img
-                src="/assets/landing_page_image.webp"
+              <PictureImage
+                webpSrc="/assets/landing_page_image.webp"
+                fallbackSrc="/assets/landing_page_image.png"
                 alt="Don Picaso's Restaurant"
                 className="rounded-2xl shadow-2xl w-full object-cover"
               />
@@ -312,8 +315,9 @@ export default function LandingPage() {
               transition={{ duration: 0.7 }}
               className="rounded-2xl overflow-hidden shadow-2xl border border-white/10"
             >
-              <img
-                src="/assets/minu1.webp"
+              <PictureImage
+                webpSrc="/assets/minu1.webp"
+                fallbackSrc="/assets/minu1.png"
                 alt="Don Picaso's Menu Page 1"
                 className="w-full h-auto object-contain bg-white/5"
               />
@@ -325,8 +329,9 @@ export default function LandingPage() {
               transition={{ duration: 0.7 }}
               className="rounded-2xl overflow-hidden shadow-2xl border border-white/10"
             >
-              <img
-                src="/assets/menu2.webp"
+              <PictureImage
+                webpSrc="/assets/menu2.webp"
+                fallbackSrc="/assets/menu2.png"
                 alt="Don Picaso's Menu Page 2"
                 className="w-full h-auto object-contain bg-white/5"
               />
@@ -636,6 +641,8 @@ export default function LandingPage() {
                 <img
                   src={branch.image}
                   alt={branch.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
@@ -770,6 +777,8 @@ export default function LandingPage() {
                     <img
                       src={testimonial.image}
                       alt={testimonial.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-12 h-12 rounded-full object-cover"
                     />
                     <div>

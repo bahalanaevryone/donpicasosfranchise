@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router';
 import { CheckCircle, ArrowRight, Phone, Mail } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import GlassCard from '../components/GlassCard';
+import PictureImage from '../components/PictureImage';
 import { franchisePackages, getPackageByCode } from '../data/franchisePackages';
 
 export default function OpportunityApplicationPage() {
@@ -23,8 +24,9 @@ export default function OpportunityApplicationPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <img
-            src="/assets/don-picasos-logo.webp"
+          <PictureImage
+            webpSrc="/assets/don-picasos-logo.webp"
+            fallbackSrc="/assets/don-picasos-logo.jpg"
             alt="Don Picaso's"
             className="mx-auto mb-6 h-16 w-auto max-w-xs rounded-lg object-contain shadow-[0_0_24px_rgba(255,215,0,0.25)]"
           />

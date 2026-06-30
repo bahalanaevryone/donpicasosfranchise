@@ -39,6 +39,7 @@ import {
 import GlassCard from '../components/GlassCard';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import PictureImage from '../components/PictureImage';
 import { Input } from '../components/ui/input';
 import {
   Table,
@@ -537,8 +538,9 @@ export default function AdminDashboard() {
       <header className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-[#0d0e14]">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
-            <img
-              src="/assets/don-picasos-logo.webp"
+            <PictureImage
+              webpSrc="/assets/don-picasos-logo.webp"
+              fallbackSrc="/assets/don-picasos-logo.jpg"
               alt="Don Picaso's"
               className="h-8 w-24 rounded object-contain object-center brightness-75"
             />
