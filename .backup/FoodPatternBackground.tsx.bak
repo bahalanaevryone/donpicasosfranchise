@@ -15,6 +15,12 @@ type IconInstance = {
   y: number;
   size: number;
   baseRotation: number;
+  floatDuration: number;
+  floatDelay: number;
+  scaleDuration: number;
+  scaleDelay: number;
+  floatXAmp: number;
+  floatYAmp: number;
   layer: number;
 };
 
@@ -178,23 +184,29 @@ function seededRandom(seed: number) {
 
 function buildGrid(isMobile = false): IconInstance[] {
   const instances: IconInstance[] = [];
-  const cols = isMobile ? 4 : 6;
-  const rows = isMobile ? 5 : 7;
+  const cols = isMobile ? 4 : 7;
+  const rows = isMobile ? 7 : 9;
   let seed = 0;
 
   for (let row = 0; row < rows; row += 1) {
     for (let col = 0; col < cols; col += 1) {
       const r = (s: number) => seededRandom(seed++ + s * 37);
-      const jitterX = (r(1) - 0.5) * 12;
-      const jitterY = (r(2) - 0.5) * 12;
+      const jitterX = (r(1) - 0.5) * 10;
+      const jitterY = (r(2) - 0.5) * 10;
 
       instances.push({
         id: `${row}-${col}`,
         iconIndex: Math.floor(r(3) * foodIcons.length),
-        x: (col / (cols - 1)) * 108 - 4 + jitterX,
-        y: (row / (rows - 1)) * 108 - 4 + jitterY,
-        size: (isMobile ? 40 : 48) + r(4) * (isMobile ? 18 : 28),
-        baseRotation: (r(5) - 0.5) * 40,
+        x: (col / (cols - 1)) * 110 - 5 + jitterX,
+        y: (row / (rows - 1)) * 110 - 5 + jitterY,
+        size: (isMobile ? 46 : 56) + r(4) * (isMobile ? 26 : 40),
+        baseRotation: (r(5) - 0.5) * 50,
+        floatDuration: 6 + r(6) * 10,
+        floatDelay: r(7) * -12,
+        scaleDuration: 5 + r(10) * 8,
+        scaleDelay: r(11) * -10,
+        floatXAmp: (r(12) - 0.5) * 30,
+        floatYAmp: (r(13) - 0.5) * 30,
         layer: Math.floor(r(14) * 3),
       });
     }
@@ -208,7 +220,7 @@ export default function FoodPatternBackground() {
   const rafRef = useRef<number>();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 700;
   const instances = useMemo(() => buildGrid(isMobile), [isMobile]);
-  const parallaxFactors = [10, 20, 32];
+  const parallaxFactors = [8, 16, 26];
 
   useEffect(() => {
     const background = backgroundRef.current;
@@ -258,6 +270,13 @@ export default function FoodPatternBackground() {
                   '--x': `${instance.x}%`,
                   '--y': `${instance.y}%`,
                   '--size': `${instance.size}px`,
+                  '--rotation': `${instance.baseRotation}deg`,
+                  '--float-duration': `${instance.floatDuration}s`,
+                  '--float-delay': `${instance.floatDelay}s`,
+                  '--scale-duration': `${instance.scaleDuration}s`,
+                  '--scale-delay': `${instance.scaleDelay}s`,
+                  '--float-x': `${instance.floatXAmp}px`,
+                  '--float-y': `${instance.floatYAmp}px`,
                   '--parallax': parallax,
                 } as CSSProperties
               }

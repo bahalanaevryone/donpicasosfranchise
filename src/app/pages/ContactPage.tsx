@@ -2,8 +2,6 @@ import { FormEvent, useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Clock, Send, Facebook, Instagram, Twitter, CheckCircle } from 'lucide-react';
 import { useSearchParams } from 'react-router';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import GlassCard from '../components/GlassCard';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -81,7 +79,7 @@ export default function ContactPage() {
       }
 
       setSubmitStatus('success');
-      setSubmitMessage('Inquiry saved to the database. The Don Picaso team will review your application.');
+      setSubmitMessage('Your message has been sent successfully! A member of our team will get back to you within 24 to 48 hours. Please check your email for a confirmation message.');
 
       // I-reset ang form fields pagkatapos ng tagumpay na submission
       setFormData({
@@ -115,7 +113,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <Navbar />
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 via-transparent to-[#B30000]/10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
@@ -164,14 +161,39 @@ export default function ContactPage() {
                 </div>
 
                 {submitStatus === 'success' && (
-                  <div className="rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-300">
-                    {submitMessage}
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-green-500/30 bg-gradient-to-r from-green-500/20 to-emerald-500/10 px-6 py-5"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-0.5">
+                        <div className="rounded-full bg-green-500/20 p-1.5">
+                          <CheckCircle className="w-5 h-5 text-green-400" />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-green-300 font-semibold text-base">Message Sent Successfully!</p>
+                        <p className="text-green-400/80 text-sm mt-1 leading-relaxed">{submitMessage}</p>
+                      </div>
+                    </div>
+                  </motion.div>
                 )}
                 {submitStatus === 'error' && (
-                  <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                    Submission failed. Please check your Supabase RLS policy settings.
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-red-500/30 bg-gradient-to-r from-red-500/20 to-rose-500/10 px-6 py-5"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="rounded-full bg-red-500/20 p-1.5">
+                        <svg className="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </div>
+                      <p className="text-red-300 text-sm">Something went wrong. Please try again or contact us directly.</p>
+                    </div>
+                  </motion.div>
                 )}
 
                 <Button type="submit" disabled={submitStatus === 'submitting'} className="w-full bg-gradient-to-r from-[#FFD700] to-[#B30000] text-black font-semibold text-lg py-6 hover:opacity-90">
@@ -197,7 +219,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }

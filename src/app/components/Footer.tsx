@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src="/assets/don-picasos-logo.jpg"
+                src="/assets/don-picasos-logo.webp"
                 alt="Don Picaso's"
                 className="h-10 w-32 rounded-md object-contain object-center shadow-[0_0_18px_rgba(255,215,0,0.2)]"
               />

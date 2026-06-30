@@ -354,7 +354,10 @@ export default function AdminDashboard() {
           (l.package_name && l.package_name !== 'Standard Franchise') ||
           (l.budget && l.budget !== 'TBA' && l.budget !== '0')
         );
-        const contactOnlyMessages = rawLeads.filter(l => l.message);
+        const contactOnlyMessages = rawLeads.filter(l => l.message && !(
+          (l.package_name && l.package_name !== 'Standard Franchise') ||
+          (l.budget && l.budget !== 'TBA' && l.budget !== '0')
+        ));
 
         // Map status counts dynamically
         const statusCounts: Record<string, number> = {};
@@ -436,11 +439,14 @@ export default function AdminDashboard() {
     setIsAuthenticated(false);
   };
 
-  const hasRealPackage = (l: RecentLead) => l.package_name && l.package_name !== 'Standard Franchise';
-  const hasRealBudget = (l: RecentLead) => l.budget !== '—' && l.budget !== 'TBA' && l.budget !== '0';
+  const isRealFranchise = (l: RecentLead) => {
+    const hasPackage = l.package_name && l.package_name !== 'Standard Franchise';
+    const hasBudget = l.budget !== '—' && l.budget !== 'TBA' && l.budget !== '0';
+    return hasPackage || hasBudget;
+  };
 
   const filteredLeads = useMemo(() => {
-    if (activeTab === 'franchise') return dashboard.recentLeads.filter(l => hasRealPackage(l) || hasRealBudget(l));
+    if (activeTab === 'franchise') return dashboard.recentLeads.filter(isRealFranchise);
     if (activeTab === 'messages') return dashboard.recentLeads.filter(l => l.message);
     return dashboard.recentLeads;
   }, [activeTab, dashboard.recentLeads]);
@@ -532,7 +538,7 @@ export default function AdminDashboard() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <img
-              src="/assets/don-picasos-logo.jpg"
+              src="/assets/don-picasos-logo.webp"
               alt="Don Picaso's"
               className="h-8 w-24 rounded object-contain object-center brightness-75"
             />

@@ -15,8 +15,6 @@ import {
   MapPin,
   Wrench,
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import GlassCard from '../components/GlassCard';
 import { Button } from '../components/ui/button';
 import { franchisePackages } from '../data/franchisePackages';
@@ -200,8 +198,6 @@ export default function FranchisePage() {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700]/10 via-transparent to-[#B30000]/10" />
@@ -547,7 +543,6 @@ export default function FranchisePage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

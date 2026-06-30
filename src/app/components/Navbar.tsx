@@ -79,7 +79,7 @@ export default function Navbar({ showAdminLogout = false, onAdminLogout }: Navba
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src="/assets/don-picasos-logo.jpg"
+              src="/assets/don-picasos-logo.webp"
               alt="Don Picaso's"
               className="h-12 w-36 rounded-md object-contain object-center shadow-[0_0_20px_rgba(255,215,0,0.25)]"
             />

@@ -3,8 +3,6 @@ import { Link, useSearchParams } from 'react-router';
 import { CheckCircle, ArrowRight, Phone, Mail } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import GlassCard from '../components/GlassCard';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import { franchisePackages, getPackageByCode } from '../data/franchisePackages';
 
 export default function OpportunityApplicationPage() {
@@ -18,8 +16,6 @@ export default function OpportunityApplicationPage() {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <Navbar />
-
       <div className="max-w-4xl mx-auto px-4 pt-28 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -28,7 +24,7 @@ export default function OpportunityApplicationPage() {
           className="text-center mb-12"
         >
           <img
-            src="/assets/don-picasos-logo.jpg"
+            src="/assets/don-picasos-logo.webp"
             alt="Don Picaso's"
             className="mx-auto mb-6 h-16 w-auto max-w-xs rounded-lg object-contain shadow-[0_0_24px_rgba(255,215,0,0.25)]"
           />
@@ -156,7 +152,6 @@ export default function OpportunityApplicationPage() {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }

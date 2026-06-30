@@ -11,12 +11,16 @@ import RegisterPage from "./pages/RegisterPage";
 import OpportunityApplicationPage from "./pages/OpportunityApplicationPage";
 import MemberPortalPage from "./pages/MemberPortalPage";
 import ScrollToTop from "./components/ScrollToTop";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function RootRoute() {
   return (
     <>
       <ScrollToTop />
+      <Navbar />
       <Outlet />
+      <Footer />
     </>
   );
 }

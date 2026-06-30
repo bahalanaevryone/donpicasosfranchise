@@ -1,8 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router';
 import { Link } from 'react-router';
 import AuthForm from '../components/AuthForm';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -13,13 +11,11 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <Navbar />
-
       <main className="pt-28 pb-16">
         {/* Branded header */}
         <div className="text-center mb-10 px-4">
           <img
-            src="/assets/don-picasos-logo.jpg"
+            src="/assets/don-picasos-logo.webp"
             alt="Don Picaso's"
             className="mx-auto mb-6 h-16 w-auto max-w-xs rounded-lg object-contain shadow-[0_0_24px_rgba(255,215,0,0.25)]"
           />
@@ -64,7 +60,6 @@ export default function RegisterPage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }

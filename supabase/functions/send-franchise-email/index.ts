@@ -80,7 +80,7 @@ Deno.serve(async (req) => {
     // Webhook mode — auto-notify admin when new lead is inserted
     const { name, email, phone, message } = (payload as WebhookPayload).record
 
-    const htmlContent = `
+    const adminHtmlContent = `
       <div style="font-family: sans-serif; padding: 20px; border: 1px solid #7A0000; border-radius: 8px;">
         <h2 style="color: #7A0000;">Don Picaso's House of Franchise</h2>
         <p>May bagong aplikante o inquiry na pumasok sa inyong website:</p>
@@ -97,16 +97,56 @@ Deno.serve(async (req) => {
       </div>
     `
 
-    const emailResponse = await sendBrevoEmail(
+    await sendBrevoEmail(
       { email: 'delacruzjoven937@gmail.com', name: 'Admin' },
       `NEW FRANCHISE LEAD: ${name}`,
-      htmlContent,
+      adminHtmlContent,
       'Don Picaso Leads',
     )
 
-    const data = await emailResponse.json()
+    // Send confirmation email to the applicant
+    const applicantHtmlContent = `
+      <div style="font-family: sans-serif; padding: 20px; border: 1px solid #7A0000; border-radius: 8px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <img src="https://ziujwnzhtxxnyzsohbjq.supabase.co/storage/v1/object/public/branding/don-picaso-logo.png" alt="Don Picaso's House of Franchise" style="max-width: 180px;" />
+        </div>
+        <h2 style="color: #7A0000; text-align: center;">Thank You, ${name}!</h2>
+        <p style="font-size: 16px; line-height: 1.6; color: #333;">
+          We have received your inquiry and would like to thank you for your interest in
+          <strong>Don Picaso's House of Franchise</strong>.
+        </p>
+        <div style="background: #fef9e7; border-left: 4px solid #FFD700; padding: 16px; margin: 20px 0; border-radius: 4px;">
+          <p style="margin: 0; color: #333; font-size: 14px; line-height: 1.5;">
+            A member of our team will review your message and get back to you within
+            <strong>24 to 48 hours</strong> via email or phone.
+          </p>
+        </div>
+        <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
+        <p style="font-size: 14px; color: #666; line-height: 1.6;">
+          In the meantime, feel free to explore our website to learn more about our franchise
+          opportunities and food products. If you have urgent concerns, you may reach us at
+          <strong>0956-293-1985</strong> or reply directly to this email.
+        </p>
+        <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
+        <p style="font-size: 12px; color: #999; text-align: center;">
+          Mamburao, Occidental Mindoro, Philippines<br />
+          Don Picaso's House of Franchise &copy; ${new Date().getFullYear()}
+        </p>
+      </div>
+    `
 
-    return new Response(JSON.stringify({ success: true, data }), {
+    try {
+      await sendBrevoEmail(
+        { email, name },
+        'Thank You for Reaching Out — Don Picaso\'s House of Franchise',
+        applicantHtmlContent,
+        'Don Picaso Franchise',
+      )
+    } catch (confirmError) {
+      console.error('Failed to send confirmation email to applicant:', confirmError.message)
+    }
+
+    return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })

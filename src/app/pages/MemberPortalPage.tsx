@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { motion } from 'motion/react';
 import { Bell, Image, Lock, LogOut, MessageSquare, PlayCircle, Tag } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import GlassCard from '../components/GlassCard';
 import { Button } from '../components/ui/button';
 
@@ -82,8 +80,6 @@ export default function MemberPortalPage() {
 
   return (
     <div className="min-h-screen bg-transparent">
-      <Navbar />
-
       <main className="pt-28 pb-16">
         <section className="px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
@@ -238,7 +234,6 @@ export default function MemberPortalPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }
